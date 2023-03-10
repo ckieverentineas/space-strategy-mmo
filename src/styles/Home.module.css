@@ -113,10 +113,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 75px;
-  height: 75px;
-  padding: 25px 10px;
-  margin-left: 16px;
+  width: 100%;
+  height: auto;
+  margin: 10% 0%;
   transform: translateZ(0);
   border-radius: var(--border-radius);
   overflow: hidden;

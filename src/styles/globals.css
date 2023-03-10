@@ -105,3 +105,26 @@ a {
     color-scheme: dark;
   }
 }
+
+button {
+  color: white;
+  width: 100%;
+  padding: 10%;
+  margin: 10% 0%;
+  border-radius: 10px;
+  background-color: black;
+}
+input {
+  color: white;
+  width: 100%;
+  padding: 1%;
+  margin: 1% 0%;
+  border-radius: 10px;
+  background-color: black;
+}
+
+button:hover {
+  color: #0070f3;
+  border-radius: 10px;
+  outline:3px solid #eaeaea;
+}
