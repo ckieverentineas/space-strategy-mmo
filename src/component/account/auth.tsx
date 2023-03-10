@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import styles from '../styles/Home.module.css'
+import styles from '@/styles/Home.module.css'
 export default function Auth() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -14,7 +14,7 @@ export default function Auth() {
         Register_User()
     };
     async function Register_User() {
-        const res = await fetch('/api/auth', {
+        const res = await fetch('/api/account/auth', {
         body: JSON.stringify({
             email,
             password

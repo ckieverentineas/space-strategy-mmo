@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  //provider = "postgresql"
+  //url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id       Int       @id @default(autoincrement())
+  email    String    @unique
+  password String
+  crdate   DateTime  @default(now())
+  Account  Account[]
+}
+
+model Account {
+  id      Int      @id @default(autoincrement())
+  lvl     Int
+  xp      Int
+  gold    Int
+  id_user Int      @unique
+  crdate  DateTime @default(now())
+  user    User     @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  Planet  Planet[]
+}
+
+model Planet {
+  id              Int            @id @default(autoincrement())
+  name            String         @unique
+  id_account      Int
+  crdate          DateTime       @default(now())
+  account         Account        @relation(fields: [id_account], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  Planet_Location Planet_Block[]
+}
+
+model Planet_Block {
+  id              Int               @id @default(autoincrement())
+  id_planet       Int
+  id_block        Int
+  crdate          DateTime          @default(now())
+  planet          Planet            @relation(fields: [id_planet], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  block           Block             @relation(fields: [id_block], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  Planet_Building Planet_Building[]
+}
+
+model Block {
+  id           Int            @id @default(autoincrement())
+  name         String         @unique
+  image        String         @unique
+  crdate       DateTime       @default(now())
+  Planet_Block Planet_Block[]
+}
+
+model Building {
+  id              Int               @id @default(autoincrement())
+  name            String            @unique
+  image           String            @unique
+  crdate          DateTime          @default(now())
+  Planet_Building Planet_Building[]
+}
+
+model Planet_Building {
+  id              Int          @id @default(autoincrement())
+  id_planet_block Int
+  id_building     Int
+  crdate          DateTime     @default(now())
+  planet_block    Planet_Block @relation(fields: [id_planet_block], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  building        Building     @relation(fields: [id_building], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
