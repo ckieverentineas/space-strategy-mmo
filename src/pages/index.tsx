@@ -28,6 +28,11 @@ export default function Home() {
             </a>
           </div>
         </div>
+        <div className={styles.center}>
+          <h2 className={inter.className}>
+          <span>↓</span> MMO Strategy Beer Space <span>↓</span>
+          </h2>
+        </div>
         <div className={styles.grid}>
           <div className={styles.card}>
             <h2 className={inter.className}>

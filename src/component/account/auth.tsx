@@ -29,7 +29,7 @@ export default function Auth() {
         if (Object.keys(result).length > 1) {
         localStorage.removeItem('session')
         localStorage.setItem('session', `${result['token']}`)
-        document.location.href= await "/profile"
+        document.location.href= "/view/account"
         }
         console.log(result)
     }
