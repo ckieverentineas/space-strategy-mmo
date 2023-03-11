@@ -31,7 +31,7 @@ export default function City() {
     async function Load_Planets() {
         const res = await fetch(`/api/planet/planet?token=${localStorage['session']}`)
         const result = await res.json()
-        console.log("🚀 ~ file: planet.tsx:34 ~ Load_Planets ~ result:", result)
+        console.log("🚀 ~ file: planet.tsx:34 ~ Load_Planets ~ result:", result['data'])
         setStatus(result['status'])
         setPlanets(result['data'])
         console.log(result) 
@@ -117,10 +117,10 @@ export default function City() {
                         >
                             <div className={styles.cityline}>
                                 <Image  className={styles.card} key={cit.id}
-                                    src = {cit.block.image} 
+                                    src = {cit.Planet_Building[0]?.building?.image || cit.block.image} 
                                     width="100"
                                     height="100"
-                                    alt = {cit.block.image}
+                                    alt = {cit.Planet_Building[0]?.building?.image || cit.block.image}
                                     onClick = {() => { console.log(`Вы нажали на площадку ${cit.id} тип местности ${cit.block.image}`); }}
                                 />
                             </div>

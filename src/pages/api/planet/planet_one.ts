@@ -23,7 +23,7 @@ export default async function handler(
 ) {
     if (req.method === 'POST') {
         const { token, id } = req.body
-        const planet_create_check: any = await prisma.planet_Owner.findFirst({ where: { id: id, id_account: Number(token) }, include: { Planet_Block: { include: { block: true } } } })
+        const planet_create_check: any = await prisma.planet_Owner.findFirst({ where: { id: id, id_account: Number(token) }, include: { Planet_Block: { include: { block: true, Planet_Building: { include: {building: true}} } } } })
         const answer = { data: planet_create_check, status: "", block: 0 }
         if (!planet_create_check) {
             answer.status = "Произошла ошибка просмотра планеты!"
