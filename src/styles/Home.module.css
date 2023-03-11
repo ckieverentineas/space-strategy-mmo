@@ -275,3 +275,25 @@
     transform: rotate(0deg);
   }
 }
+
+.city {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  border: 1px solid #eaeaea;
+  list-style-type: none;
+  clear:none; 
+  padding:0;
+  margin:0;
+}
+.cityline {
+  white-space: pre-wrap;
+  color: #0070f3;
+}
+.cityline:hover,
+.cityline:focus,
+.cityline:active {
+  color: #0070f3;
+  border-radius: 10px;
+  outline:3px solid #eaeaea;
+}
