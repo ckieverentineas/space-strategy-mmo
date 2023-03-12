@@ -29,7 +29,7 @@ export default function Planet() {
               <span>↓</span> Ваши планеты, повелитель {session} <span>↓</span>
             </h2>
           </div>
-          <div> <City /> </div>
+          
           <div className={styles.grid}>
             <Link href="/view/account" className={styles.card} rel="noopener noreferrer">
               <h2 className={inter.className}>
@@ -42,6 +42,7 @@ export default function Planet() {
               </h2>
             </Link>
           </div>
+          <div> <City /> </div>
         </main>
       </>
     )

@@ -53,6 +53,7 @@ export default function City() {
             name
         };
         console.log(data);
+        setStatus("Создаем планету ожидайте, примерно потребуется 10-20 секунд")
         Planet_Creator()
     }
     async function Planet_Creator() {
@@ -62,9 +63,7 @@ export default function City() {
                 name,
                 token: localStorage['session']
             }),
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             method: 'POST'
         })
         const result = await res.json()
@@ -73,21 +72,23 @@ export default function City() {
     }
     return (
         <div className={styles.card}>
-            <div>{status}</div>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="name">Название планеты:</label>
-                </div>
-                <div>
-                    <input
-                        id="name"
-                        type="name"
-                        onChange={e => setName(e.target.value)}
-                    /><br></br>
-                </div>
-                <button type="submit">Создать</button>
-            </form>
             <div className={styles.city}>
+                <div>
+                    <form onSubmit={handleSubmit}>
+                        <div>
+                            <label htmlFor="name">Название планеты:</label>
+                        </div>
+                        <div>
+                            <input
+                                id="name"
+                                type="name"
+                                onChange={e => setName(e.target.value)}
+                            /><br></br>
+                        </div>
+                        <button type="submit">Создать</button>
+                    </form>
+                    <div>{status}</div>
+                </div>
                 {planets?.map((planet: any) => (
                     <Tippy key={`tippy_planet_info${planet.id}`}
                         className={styles.cityline} 
@@ -106,7 +107,7 @@ export default function City() {
                             interactive={true} 
                             interactiveBorder={20}
                         >
-                            <div key={`planet${planet.id}`} className={styles.cityline}>
+                            <div key={`planet${planet.id}`}>
                                 <Image key={planet.planet.id}
                                     className={styles.card} 
                                     src = {planet.planet.image} 
@@ -139,8 +140,8 @@ export default function City() {
                             interactive={true} 
                             interactiveBorder={20}
                         >
-                            <div key={`block${cit.id}`}className={styles.cityline}>
-                                <Image  className={styles.card} key={cit.id}
+                            <div key={`block${cit.id}`} className={styles.map}>
+                                <Image  className={styles.map} key={cit.id}
                                     src = {cit.Planet_Building[0]?.building?.image || cit.block.image} 
                                     width="100"
                                     height="100"
