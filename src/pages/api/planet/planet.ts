@@ -18,7 +18,7 @@ async function Planet_Creator(token: number, name: string, answer: any) {
     const planet_create_check: Planet_Owner | null = await prisma.planet_Owner.findFirst({ where: { name: name } })
     if (!planet_create_check) {
         const planet_list = await prisma.planet.findMany({})
-        const planer_create = await prisma.planet_Owner.create({ data: { name: name, id_planet: planet_list[Random_Integer(0, planet_list.length)].id, id_account: Number(token) } })
+        const planer_create = await prisma.planet_Owner.create({ data: { name: name, id_planet: planet_list[Random_Integer(0, planet_list.length-1)].id, id_account: Number(token) } })
         if (!planer_create) {
             answer.status = "Невозможно создать планету"
         } else {

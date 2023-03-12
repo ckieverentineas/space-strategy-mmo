@@ -4,14 +4,18 @@ import Image from 'next/image'
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css'; // optional
 import Build from './building';
+import { Inter } from 'next/font/google';
+import Loading from '../system/loading';
 function Random_Integer(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+const inter = Inter({ subsets: ['latin'] })
 export default function City() {
     const [name, setName] = useState('');
     const [city, setCity] = useState([])
     const [planets, setPlanets] = useState([])
     const [status, setStatus] = useState('');
+    const [loading, setLoading] = useState(false)
     async function Load_Planet(id: number) {
         const res = await fetch('/api/planet/planet_one', {
             body: JSON.stringify({
@@ -47,14 +51,18 @@ export default function City() {
         console.log(result) 
     }
     useEffect (() =>{Load_Planets()}, [])
-    const handleSubmit = (e: { preventDefault: () => void; }) => {
+    const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        const data = {
-            name
-        };
+        const data = { name };
         console.log(data);
-        setStatus("Создаем планету ожидайте, примерно потребуется 10-20 секунд")
-        Planet_Creator()
+        if (loading) { 
+            setStatus("Дождитесь завершения создания планеты");
+        } else {
+            setStatus("Создаем планету ожидайте, примерно потребуется 10-20 секунд")
+            setLoading(true)
+            await Planet_Creator()
+            setLoading(false)
+        }
     }
     async function Planet_Creator() {
         const res = await fetch('/api/planet/planet', {
@@ -73,7 +81,12 @@ export default function City() {
     return (
         <div className={styles.card}>
             <div className={styles.city}>
-                <div>
+                <div className={styles.card}>
+                    <div>
+                        <h5 className={inter.className}>
+                            <span>↓</span> Колонизируем новую планету? <span>↓</span>
+                        </h5>
+                    </div>
                     <form onSubmit={handleSubmit}>
                         <div>
                             <label htmlFor="name">Название планеты:</label>
@@ -87,7 +100,10 @@ export default function City() {
                         </div>
                         <button type="submit">Создать</button>
                     </form>
-                    <div>{status}</div>
+                    <div className={styles.card}>
+                        <label>{status} </label>
+                        {loading && <Loading /> }
+                    </div>
                 </div>
                 {planets?.map((planet: any) => (
                     <Tippy key={`tippy_planet_info${planet.id}`}
