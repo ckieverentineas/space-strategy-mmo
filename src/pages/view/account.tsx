@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import styles from '@/styles/Home.module.css'
 import Account from '@/component/account/account'
 import { Inter } from 'next/font/google'
+import Link from 'next/link'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,7 +18,7 @@ export default function Profile() {
     return (
       <>
         <Head>
-          <title>Личный кабинет повелителя {session}</title>
+          <title>{`Личный кабинет повелителя ${session}`}</title>
           <meta name="description" content="Создано, чтобы вы настраивали" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" href="/favicon.ico" />
@@ -25,7 +26,7 @@ export default function Profile() {
         <main className={styles.main}>
           <div className={styles.center}>
             <h2 className={inter.className}>
-              <span>↓</span> Приветствуем повелителя {session} <span>↓</span>
+              <span>↓</span> {`Приветствуем повелителя ${session}`} <span>↓</span>
             </h2>
           </div>
           <div className={styles.card}> <Account /> </div>
@@ -35,11 +36,11 @@ export default function Profile() {
                 Карта мира <span>-&gt;</span>
               </h2>
             </a>
-            <a href="/view/planet" className={styles.card} target="_blank" rel="noopener noreferrer">
+            <Link href="/view/planet" className={styles.card} rel="noopener noreferrer">
               <h2 className={inter.className}>
                 Планеты <span>-&gt;</span>
               </h2>
-            </a> 
+            </Link> 
             <a href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app" className={styles.card} target="_blank" rel="noopener noreferrer">
               <h2 className={inter.className}>
                 Корабли <span>-&gt;</span>

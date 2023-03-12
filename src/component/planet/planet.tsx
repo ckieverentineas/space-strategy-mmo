@@ -15,6 +15,7 @@ export default function City() {
     async function Load_Planet(id: number) {
         const res = await fetch('/api/planet/planet_one', {
             body: JSON.stringify({
+                type: 'planet',
                 id,
                 token: localStorage['session']
             }),
@@ -29,7 +30,16 @@ export default function City() {
         setCity(result['data']['Planet_Block'])
     }
     async function Load_Planets() {
-        const res = await fetch(`/api/planet/planet?token=${localStorage['session']}`)
+        const res = await fetch('/api/planet/planet', {
+            body: JSON.stringify({
+                type: 'planets',
+                token: localStorage['session']
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST'
+        })
         const result = await res.json()
         console.log("🚀 ~ file: planet.tsx:34 ~ Load_Planets ~ result:", result['data'])
         setStatus(result['status'])
@@ -48,6 +58,7 @@ export default function City() {
     async function Planet_Creator() {
         const res = await fetch('/api/planet/planet', {
             body: JSON.stringify({
+                type: 'planet_creator',
                 name,
                 token: localStorage['session']
             }),
@@ -78,19 +89,26 @@ export default function City() {
             </form>
             <div className={styles.city}>
                 {planets?.map((planet: any) => (
-                    <Tippy className={styles.cityline} content={<div className={styles.card}><pre>{planet.id}-{planet.name} <br/>{planet.planet.name}</pre></div> } duration={[750, 1000]} delay={[300, null]} interactive={true} interactiveBorder={20} >
-                        <Tippy className={styles.cityline} 
-                            content={
-                                <div onClick={() => Load_Planet(planet.id)}>Вход</div>
-                            } 
+                    <Tippy key={`tippy_planet_info${planet.id}`}
+                        className={styles.cityline} 
+                        content={<div className={styles.card}><pre>{planet.id}-{planet.name} <br/>{planet.planet.name}</pre></div> } 
+                        duration={[750, 1000]} 
+                        delay={[300, null]} 
+                        interactive={true} 
+                        interactiveBorder={20} 
+                    >
+                        <Tippy key={`tippy_planet_open${planet.id}`}
+                            className={styles.cityline} 
+                            content={<div onClick={() => Load_Planet(planet.id)}>Вход</div>} 
                             placement="auto-end"
                             duration={[2000, 1000]} 
                             delay={[1000, null]} 
                             interactive={true} 
                             interactiveBorder={20}
                         >
-                            <div className={styles.cityline}>
-                                <Image  className={styles.card} key={planet.planet.id}
+                            <div key={`planet${planet.id}`} className={styles.cityline}>
+                                <Image key={planet.planet.id}
+                                    className={styles.card} 
                                     src = {planet.planet.image} 
                                     width="100"
                                     height="100"
@@ -104,18 +122,24 @@ export default function City() {
             </div>
             <div className={styles.city}>
                 {city?.map((cit: any) => (
-                    <Tippy className={styles.cityline} content={<div className={styles.card}><pre>Площадка: {cit.id}<br/>Местность: {cit.block.name}<br/>Зданий: {0}<br/>Юнитов: {0}</pre></div> } duration={[750, 1000]} delay={[300, null]} interactive={true} interactiveBorder={20} >
-                        <Tippy className={styles.cityline} 
-                            content={
-                                <Build location_map={cit}/>
-                            } 
+                    <Tippy key={`tippy_block${cit.id}`}
+                        className={styles.cityline} 
+                        content={<div className={styles.card}><pre>Площадка: {cit.id}<br/>Местность: {cit.block.name}<br/>Зданий: {0}<br/>Юнитов: {0}</pre></div> } 
+                        duration={[750, 1000]} 
+                        delay={[300, null]} 
+                        interactive={true} 
+                        interactiveBorder={20} 
+                    >
+                        <Tippy key={`tippy_block_build${cit.id}`}
+                            className={styles.cityline} 
+                            content={<Build location_map={cit}/>} 
                             placement="auto-end"
                             duration={[2000, 1000]} 
                             delay={[1000, null]} 
                             interactive={true} 
                             interactiveBorder={20}
                         >
-                            <div className={styles.cityline}>
+                            <div key={`block${cit.id}`}className={styles.cityline}>
                                 <Image  className={styles.card} key={cit.id}
                                     src = {cit.Planet_Building[0]?.building?.image || cit.block.image} 
                                     width="100"

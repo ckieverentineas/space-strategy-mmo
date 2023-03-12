@@ -7,12 +7,8 @@ export default function Account() {
     const [status, setStatus] = useState('');
     async function Get_Account() {
         const res = await fetch('/api/account/account', {
-            body: JSON.stringify({
-                token: localStorage['session']
-            }),
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            body: JSON.stringify({ token: localStorage['session'] }),
+            headers: { 'Content-Type': 'application/json' },
             method: 'POST'
         })
         const result = await res.json()
@@ -22,19 +18,14 @@ export default function Account() {
         if (Object.keys(result).length > 1444) {
             localStorage.removeItem('session')
             localStorage.setItem('session', `${result['token']}`)
-            document.location.href = await "/profile"
         }
         console.log(result)
     }
     useEffect (() =>{Get_Account() }, [])
     async function Game_Init() {
         const res = await fetch('/api/init', {
-            body: JSON.stringify({
-                token: localStorage['session']
-            }),
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            body: JSON.stringify({ token: localStorage['session'] }),
+            headers: { 'Content-Type': 'application/json' },
             method: 'POST'
         })
         const result = await res.json()

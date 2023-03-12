@@ -1,35 +1,29 @@
 import { useState } from 'react'
 import styles from '@/styles/Home.module.css'
+import { useRouter } from 'next/router';
 export default function Auth() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [answer, setAnswer] = useState('');
-    const handleSubmit = (e: { preventDefault: () => void; }) => {
+    const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        const data = {
-        email,
-        password
-        };
+        const data = { email, password };
         console.log(data);
-        Register_User()
+        await Register_User()
     };
+    const router = useRouter()
     async function Register_User() {
         const res = await fetch('/api/account/auth', {
-        body: JSON.stringify({
-            email,
-            password
-        }),
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        method: 'POST'
+            body: JSON.stringify({ email, password }),
+            headers: { 'Content-Type': 'application/json' },
+            method: 'POST'
         })
         const result = await res.json()
         setAnswer(result['status'])
         if (Object.keys(result).length > 1) {
-        localStorage.removeItem('session')
-        localStorage.setItem('session', `${result['token']}`)
-        document.location.href= "/view/account"
+            localStorage.removeItem('session')
+            localStorage.setItem('session', `${result['token']}`)
+            router.push('/view/account')
         }
         console.log(result)
     }

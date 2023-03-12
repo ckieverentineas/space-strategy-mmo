@@ -34,11 +34,16 @@ export default function Build(location_map: { location_map: { id: any; name: any
             <p className={styles.card} onClick={Init_Building}>Выбор постройки</p>
             <div className={styles.city}>
                 {building?.map((cit) => (
-                    <Tippy className={styles.cityline} content={<div className={styles.card}><pre>Номер: {cit.id}<br/>Название: {cit.name}</pre></div>} duration={[750, 1000]} interactive={true} interactiveBorder={20}>
-                        <Tippy className={styles.cityline} 
-                            content={
-                                <div className={styles.card}onDoubleClick={() => {Building_Build(cit)}}>Построить</div>
-                            } 
+                    <Tippy key={`tippy_building_info${cit.id}`}
+                        className={styles.cityline} 
+                        content={<div className={styles.card}><pre>Номер: {cit.id}<br/>Название: {cit.name}</pre></div>} 
+                        duration={[750, 1000]} 
+                        interactive={true} 
+                        interactiveBorder={20}
+                    >
+                        <Tippy key={`tippy_building_build${cit.id}`}
+                            className={styles.cityline} 
+                            content={<div className={styles.card}onDoubleClick={() => {Building_Build(cit)}}>Построить</div>} 
                             placement="auto-end"
                             duration={[2000, 1000]} 
                             delay={[1000, null]}  
@@ -46,7 +51,7 @@ export default function Build(location_map: { location_map: { id: any; name: any
                             interactiveBorder={20}
                             allowHTML={false}
                         >
-                            <div className={styles.cityline}>
+                            <div key={`building${cit.id}`} className={styles.cityline}>
                                 <Image className={styles.card} key={cit.id}
                                     src = {cit.image}
                                     width="100"
